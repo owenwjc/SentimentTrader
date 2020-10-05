@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<head>
+    <meta charset = "UTF-8">
+    <title>APP</title>
+</head>
+<body>
+    <h1> Hello World.</h1>
+</body>
+<form action = "/direction" method = "POST">
+    <input type = "text" placeholder = "name" name = "name">
+    <button type = "submit" name = "button" value = "Bullish">Bullish</button>
+    <button type = "submit" name = "button" value = "Bearish">Bearish</button>
+</form>
+
+<div>
+    <h2>Update Name</h2>
+    <button id = "update-button"> Update Name</button>
+    <script src="/main.js"></script>
+</div>
+
+<ul class="names">
+    <% for(var i = 0; i < names.length; i++){%> 
+        <li class = "name">
+            <span><%= names[i].name %></span>:
+            <span><%= names[i].button%></span>
+            <span><button id = "delete-button" value = names[i]._id>Delete</button></span> 
+        </li>
+    <%}%>
+</ul>
+</html>
