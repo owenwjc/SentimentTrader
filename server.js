@@ -3,6 +3,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const MongoClient = require('mongodb').MongoClient
 const app = express();
+const ObjectID = require('mongodb').ObjectID
 
 MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false',{
   useUnifiedTopology: true}).then(client =>{
@@ -52,5 +53,12 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
       )
     })
 
-  }
-).catch(console.error)
+    app.delete('/names', (req,res) => {
+      testCollection.deleteOne({
+        _id: ObjectID(req.body._id)}
+    ).then(result => {
+      res.json('Deleted entry')
+    }).catch(error => {console.error(error)})
+  })
+    
+}).catch(console.error)
