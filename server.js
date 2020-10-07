@@ -21,44 +21,47 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
     })
 
     app.get('/', (req,res) => {
-      testCollection.find().toArray().then(results => {
-        res.render('index.ejs', {names: results})
-      }).catch(error => {console.error(error)})
-    })
-
-    app.post('/direction', (req,res) => {
-      var obj = {button: req.body.button, name: req.body.name}
-      testCollection.insertOne(obj).then(
-        result => {
-          res.redirect('/')
-        }).catch(
-          error => {console.error(error)}
-        )
+        testCollection.findOne(
+            {tag: 0}
+        ).then(results => {
+          res.render('index.ejs', {post: results})
+        }).catch(error => {console.error(error)})
     })
 
     app.put('/names', (req,res)=>{
-      testCollection.findOneAndUpdate(
-        {name: 'Owen'},
-        {$set: {
-          name: req.body.name,
-          button: req.body.button
-        }},
-        {
-          upsert: true
-        }
-      ).then(
-        result => {console.log(result)}
-      ).catch(
-        error => {console.error(error)}
-      )
+        testCollection.findOneAndUpdate(
+          {name: 'Owen'},
+          {$set: {
+            name: req.body.name,
+            button: req.body.button
+          }},
+          {
+            upsert: true
+          }
+        ).then(
+          result => {console.log(result)}
+        ).catch(
+          error => {console.error(error)}
+        )
+      })
+
+    app.post('/direction', (req,res) => {
+        var obj = {button: req.body.button, name: req.body.name, tag: 0}
+        testCollection.insertOne(obj).then(
+          result => {
+            res.redirect('/')
+          }).catch(
+            error => {console.error(error)}
+          )
     })
 
     app.delete('/names', (req,res) => {
-      testCollection.deleteOne({
-        _id: ObjectID(req.body._id)}
-    ).then(result => {
-      res.json('Deleted entry')
-    }).catch(error => {console.error(error)})
-  })
-    
+        testCollection.deleteOne({
+          _id: ObjectID(req.body._id)}
+      ).then(result => {
+        res.json('Deleted entry')
+      }).catch(error => {console.error(error)})
+    })
+
+
 }).catch(console.error)
