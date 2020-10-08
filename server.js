@@ -28,11 +28,10 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
         if (results){
           postid = results._id
           console.log(postid)
-          res.render('index.ejs', {post: results})
+          res.render('home.ejs', {post: results})
         }
         else{
-          res.render('index.ejs', {post:{name: "none", button: "none"}})
-          emptyDb.visible = false
+          res.render('empty.ejs')
           postid = null
         }
       }).catch(error => {console.error(error)})
