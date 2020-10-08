@@ -1,15 +1,14 @@
-const update = document.querySelector('#update-button')
-
-const data = {name: 'David',
-              button: 'Bullish'}
-
-update.addEventListener('click', _ =>{
-    fetch('/names',{
-        method: 'put',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(data)
+document.querySelectorAll('#trend-button').forEach(trendButton =>
+    trendButton.addEventListener('click', _ =>{
+        fetch('/names',{
+            method: 'put',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({button: trendButton.value})
+        }).then(data => {
+            window.location.reload()
+        })
     })
-})
+)
 
 document.querySelectorAll('#delete-button').forEach(deleteButton =>
 

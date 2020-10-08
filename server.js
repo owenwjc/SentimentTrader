@@ -10,6 +10,7 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
     console.log('In the mainframe')
     const db = client.db('db')
     const testCollection = db.collection('Test Collection')
+    var postid = null
 
     app.set('view engine', 'ejs')
     app.use(express.static('public'))
@@ -21,29 +22,34 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
     })
 
     app.get('/', (req,res) => {
-        testCollection.findOne(
-            {tag: 0}
-        ).then(results => {
+      testCollection.findOne(
+          {tag: 0}
+      ).then(results => {
+        if (results){
+          postid = results._id
+          console.log(postid)
           res.render('index.ejs', {post: results})
-        }).catch(error => {console.error(error)})
+        }
+        else{
+          res.render('index.ejs', {post:{name: "none", button: "none"}})
+          emptyDb.visible = false
+          postid = null
+        }
+      }).catch(error => {console.error(error)})
     })
 
     app.put('/names', (req,res)=>{
-        testCollection.findOneAndUpdate(
-          {name: 'Owen'},
-          {$set: {
-            name: req.body.name,
-            button: req.body.button
-          }},
-          {
-            upsert: true
-          }
-        ).then(
-          result => {console.log(result)}
-        ).catch(
-          error => {console.error(error)}
-        )
-      })
+      testCollection.findOneAndUpdate(
+        {_id: postid},
+        {$set: {
+          tag: req.body.button
+        }}
+      ).then(
+        result => {console.log(result)}
+      ).catch(
+        error => {console.error(error)}
+      )
+    })
 
     app.post('/direction', (req,res) => {
         var obj = {button: req.body.button, name: req.body.name, tag: 0}

@@ -1,23 +1,33 @@
 <!DOCTYPE html>
 <head>
     <meta charset = "UTF-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <title>STonKS</title>
 </head>
 <body>
     <div class = "post">
-        <h2>Title</h2>
+        <h2>Post</h2>
         <span><%= post.name%></span>
-        <h2>Body</h2>
         <span><%= post.button%></span>
     </div>
-    <div>
-        <button id = "bullish-button">Bullish</button>
-        <button id = "bearish-button">Bearish</button>
-    </div>
-    <div>
+    <div class = "buttons">
+        <button id = "trend-button" value = "bullish">Bullish</button>
+        <button id = "trend-button" value = "bearish">Bearish</button>
         <button id = "delete-button">Delete</button>
     </div>
 
+    <div class = "emptyDb" style = "visibility: hidden;">
+        <h2>There are no more posts.</h2>
+    </div>
+
     <script src = "/main.js"></script>
+
+<script>
+    function emptyDb(){
+        document.getElementById("emptyDb").style.visibility = "visible"
+        document.getElementById("post").style.visibility = "hidden"
+        document.getElementById("buttons").style.visibility = "hidden"
+    }
+</script>
 </body>
 </html>
