@@ -18,11 +18,12 @@ body,html{
       <a href="/labelling" class="w3-bar-item w3-button w3-padding-large w3-hide-small">LABELLING</a>
     </div>
 </div>
-<body>
+<body class="w3-black">
+<div class="w3-content" style="max-width:2000px;margin-top:46px">
     <div class = "post">
-        <h3>Title</h3>
+        <h3 class="w3-text-white">Title</h3>
         <span><%= post.Title%></span>
-        <h3>Body</h3>
+        <h3 class="w3-text-white">Body</h3>
         <span><%= post.Body%></span>
     </div>
     <div class = "buttons">
@@ -32,5 +33,6 @@ body,html{
     </div>
 
     <script src = "/main.js"></script>
+</div>
 </body>
 </html>

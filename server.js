@@ -47,7 +47,7 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
           Label: req.body.button
         }}
       ).then(
-        result => {console.log(result)}
+        result => {res.redirect('/labelling')}
       ).catch(
         error => {console.error(error)}
       )
