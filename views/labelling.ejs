@@ -12,7 +12,6 @@ body,html{
     font-family: "Roboto", sans-serif;
 }
 </style>
-
 <div class="w3-top">
     <div class="w3-bar w3-black w3-card">
       <a href="/" class="w3-bar-item w3-button w3-padding-large">HOME</a>
@@ -20,6 +19,18 @@ body,html{
     </div>
 </div>
 <body>
+    <div class = "post">
+        <h3>Title</h3>
+        <span><%= post.Title%></span>
+        <h3>Body</h3>
+        <span><%= post.Body%></span>
+    </div>
+    <div class = "buttons">
+        <button id = "trend-button" value = "bullish">Bullish</button>
+        <button id = "trend-button" value = "bearish">Bearish</button>
+        <button id = "delete-button">Delete</button>
+    </div>
 
+    <script src = "/main.js"></script>
 </body>
 </html>

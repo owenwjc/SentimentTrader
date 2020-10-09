@@ -9,7 +9,7 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
   useUnifiedTopology: true}).then(client =>{
     console.log('In the mainframe')
     const db = client.db('db')
-    const testCollection = db.collection('Test Collection')
+    const threads = db.collection('threads')
     var postid = null
 
     app.set('view engine', 'ejs')
@@ -21,14 +21,17 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
       console.log('listening on 3000')
     })
 
-    app.get('/', (req,res) => {
-      testCollection.findOne(
-          {tag: 0}
+    app.get('/',(req,res) => {
+      res.render('home.ejs')
+    })
+
+    app.get('/labelling', (req,res) => {
+      threads.findOne(
+          {Label: 0}
       ).then(results => {
         if (results){
           postid = results._id
-          console.log(postid)
-          res.render('home.ejs', {post: results})
+          res.render('labelling.ejs', {post: results})
         }
         else{
           res.render('empty.ejs')
@@ -38,10 +41,10 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
     })
 
     app.put('/names', (req,res)=>{
-      testCollection.findOneAndUpdate(
+      threads.findOneAndUpdate(
         {_id: postid},
         {$set: {
-          tag: req.body.button
+          Label: req.body.button
         }}
       ).then(
         result => {console.log(result)}
@@ -52,7 +55,7 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
 
     app.post('/direction', (req,res) => {
         var obj = {button: req.body.button, name: req.body.name, tag: 0}
-        testCollection.insertOne(obj).then(
+        threads.insertOne(obj).then(
           result => {
             res.redirect('/')
           }).catch(
@@ -61,8 +64,8 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
     })
 
     app.delete('/names', (req,res) => {
-        testCollection.deleteOne({
-          _id: ObjectID(req.body._id)}
+        threads.deleteOne({
+          _id: ObjectID(postid)}
       ).then(result => {
         res.json('Deleted entry')
       }).catch(error => {console.error(error)})
