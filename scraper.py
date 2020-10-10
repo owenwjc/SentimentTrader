@@ -37,13 +37,16 @@ titles = [post.title for post in postlist]
 bodies = [post.selftext for post in postlist]
 tags = [post.link_flair_text for post in postlist]
 
+
 postDf['Title'] = titles
 postDf['Body'] = bodies
 postDf['Inserted Date'] = insertedDate
 postDf['Tag'] = tags
+postDf['Label'] = 0
+postDf['Stocks'] = 0
 
 def cleanStrings(string):
-    return re.sub('[^a-zA-Z0-9./$]+', ' ',string)
+    return re.sub("[^a-zA-Z0-9./$:,']+", ' ',string)
 
 postDf['Title'] = postDf['Title'].apply(cleanStrings)
 postDf['Body'] = postDf['Body'].apply(cleanStrings)
