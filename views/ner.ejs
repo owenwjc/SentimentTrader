@@ -19,19 +19,24 @@ body,html{
       <a href="/ner" class="w3-bar-item w3-button w3-padding-large w3-hide-small">NER</a>
     </div>
 </div>
-<body class="w3-black">
+<body class="w3-white">)
 <div class="w3-content" style="max-width:2000px;margin-top:46px">
-    <div class = "post">
-        <h3 class="w3-text-white">Title</h3>
-        <span><%= post.Title%></span>
-        <h3 class="w3-text-white">Body</h3>
-        <span><%= post.Body%></span>
-    </div>
-    <div class = "buttons">
-        <button id = "trend-button" value = "bullish">Bullish</button>
-        <button id = "trend-button" value = "bearish">Bearish</button>
-        <button id = "delete-button">Delete</button>
-    </div>
+    <div class = "NER">
+        <table class = "w3-table-all">
+            <tr>
+                <th>Title</th>
+                <th>Body</th>
+                <th>Stocks</th>
+            </tr>
+            <%for(var i = 0; i < NER.length; i++) {%>
+                <tr>
+                    <th><%= NER[i].Title%></th>
+                    <th><%= NER[i].Body%></th>
+                    <th><%= NER[i].Stocks%></th>
+                </tr>
+            <%}%>
+        </table>
+
 
     <script src = "/main.js"></script>
 </div>

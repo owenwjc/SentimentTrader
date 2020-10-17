@@ -40,6 +40,14 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
       }).catch(error => {console.error(error)})
     })
 
+    app.get('/ner', (req,res)=> {
+      threads.find(
+        {Label: {$ne: 0}}
+      ).toArray().then(results => {
+        res.render('ner.ejs', {NER: results})
+      }).catch(error => {console.error(error)})
+    })
+
     app.put('/names', (req,res)=>{
       threads.findOneAndUpdate(
         {_id: postid},
