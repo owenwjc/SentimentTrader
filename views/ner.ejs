@@ -6,10 +6,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
     <title>STonKS</title>
 </head>
+<script type="text/javascript"> 
+    function showHideRow(row) { 
+        var x = document.getElementById(row);
+        if (x.style.display === "none") {
+            x.style.display = "table-row";
+        } else {
+            x.style.display = "none";
+        }
+    } 
+</script> 
 <style>
 body,html{
     height: 100%;
     font-family: "Roboto", sans-serif;
+}
+td:not(.hidden):hover {
+  background-color: #6bcff7;
+  color: #000000;
 }
 </style>
 <div class="w3-top">
@@ -30,9 +44,12 @@ body,html{
             </tr>
             <%for(var i = 0; i < NER.length; i++) {%>
                 <tr>
-                    <th><%= NER[i].Title%></th>
-                    <th><%= NER[i].Body%></th>
-                    <th><%= NER[i].Stocks%></th>
+                    <td class = "hidden"><%= NER[i].Title%></td>
+                    <td onclick="showHideRow('<%= NER[i]._id%>')"><%= NER[i].Body.substring(0,100)%> ...</td>
+                    <td><%= NER[i].Stocks%></td>
+                </tr>
+                <tr id = "<%= NER[i]._id%>" style = "display:none;">
+                    <td class = "hidden" colspan = 3><%= NER[i].Body%></td>
                 </tr>
             <%}%>
         </table>

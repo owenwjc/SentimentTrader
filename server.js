@@ -10,6 +10,8 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
     console.log('In the mainframe')
     const db = client.db('db')
     const threads = db.collection('threads')
+    const chunks = db.collection('chunks')
+    const matches = db.collection('matches')
     var postid = null
 
     app.set('view engine', 'ejs')
@@ -42,11 +44,46 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
 
     app.get('/ner', (req,res)=> {
       threads.find(
-        {Label: {$ne: 0}}
+        {Label: {$ne:0}}
       ).toArray().then(results => {
         res.render('ner.ejs', {NER: results})
       }).catch(error => {console.error(error)})
     })
+
+    app.get('/ner/thread', (req,res) => {
+      var threadMatches = matches.find(
+        {id: {$eq: req.body}}
+        ).toArray()
+      var threadChunks = chunks.find(
+        {id: {$eq: req.body}}
+        ).toArray()
+      var thread = threads.find(
+        {_id: {$eq: req.body}}
+        ).toArray()
+      res.render('thread.ejs', {
+        thread: thread,
+        threadMatches: threadMatches,
+        threadChunks: threadChunks
+      })
+    })
+
+    /*db.collection('threads').aggregate([
+        {$match: {Label: {$ne: 0}}},
+        {$lookup: {
+          from: "chunks",
+          localField: "_id",
+          foreignField: "id",
+          as: "chunks"
+          }
+        },{
+          $lookup: {
+            from: "matches",
+            localField: "_id",
+            foreignField: "id",
+            as: "matches"
+          }
+        }
+      ])*/
 
     app.put('/names', (req,res)=>{
       threads.findOneAndUpdate(
@@ -59,16 +96,6 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
       ).catch(
         error => {console.error(error)}
       )
-    })
-
-    app.post('/direction', (req,res) => {
-        var obj = {button: req.body.button, name: req.body.name, tag: 0}
-        threads.insertOne(obj).then(
-          result => {
-            res.redirect('/')
-          }).catch(
-            error => {console.error(error)}
-          )
     })
 
     app.delete('/names', (req,res) => {
