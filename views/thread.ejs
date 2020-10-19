@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<head>
+    <meta charset = "UTF-8">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <title>STonKS</title>
+</head>
+body,html{
+    height: 100%;
+    font-family: "Roboto", sans-serif;
+}
+</style>
+<div class="w3-top">
+    <div class="w3-bar w3-black w3-card">
+      <a href="/" class="w3-bar-item w3-button w3-padding-large">HOME</a>
+      <a href="/labelling" class="w3-bar-item w3-button w3-padding-large w3-hide-small">LABELLING</a>
+      <a href="/ner" class="w3-bar-item w3-button w3-padding-large w3-hide-small">NER</a>
+    </div>
+</div>
+<body>
+    <div class="w3-content" style="max-width:2000px;margin-top:46px">
+        <div class = "thread">
+            <div class = "post">
+                <h3 >Title</h3>
+                <span><%= thread[0][0].Title%></span>
+                <h3 >Body</h3>
+                <span><%= thread[0][0].Body%></span>
+                <h3 >Stocks</h3>
+                <span><%= thread[0][0].Stocks%></span>
+            </div>
+            <table class = "w3-table-all" style = "width: 50%; float:left">
+                <tr>
+                    <th>Named Entity</th>
+                    <th>Label</th>
+                </tr>
+                <%for (var i = 0; i < thread[2].length; i++) {%>
+                    <tr>
+                        <td><%= thread[2][i]['Named Entity']%></td>
+                        <td><%= thread[2][i].Label%></td>
+                    </tr>
+                <%}%>
+            </table>
+            <table class = "w3-table-all" style = "width: 50%; float:right">
+                <tr>
+                    <th>Left</th>
+                    <th>Right</th>
+                    <th>Similarity</th>
+                </tr>
+                <%for(var i = 0; i < thread[1].length; i++) {%>
+                    <tr>
+                        <td><%= thread[1][i].Left%></td>
+                        <td><%= thread[1][i].Right%> ...</td>
+                        <td><%= thread[1][i].Similarity%></td>
+                    </tr>
+                <%}%>
+            </table>
+    </div>
+</body>

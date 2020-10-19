@@ -13,6 +13,9 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
     const chunks = db.collection('chunks')
     const matches = db.collection('matches')
     var postid = null
+    var threadMatches = []
+    var threadChunks = []
+    var thread = []
 
     app.set('view engine', 'ejs')
     app.use(express.static('public'))
@@ -51,20 +54,26 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
     })
 
     app.get('/ner/thread', (req,res) => {
-      var threadMatches = matches.find(
-        {id: {$eq: req.body}}
-        ).toArray()
-      var threadChunks = chunks.find(
-        {id: {$eq: req.body}}
-        ).toArray()
-      var thread = threads.find(
-        {_id: {$eq: req.body}}
-        ).toArray()
-      res.render('thread.ejs', {
-        thread: thread,
-        threadMatches: threadMatches,
-        threadChunks: threadChunks
+      var a = Promise.resolve(thread)
+      var b = Promise.resolve(threadMatches)
+      var c = Promise.resolve(threadChunks)
+
+      Promise.all([a,b,c]).then(result => {
+        res.render('thread.ejs', {thread: result})
       })
+    })
+
+    app.put('/ner/thread', function(req,res) {
+      threadMatches = matches.find(
+        {id: {$eq: ObjectID(req.body._id)}}
+        ).toArray()
+      threadChunks = chunks.find(
+        {id: {$eq: ObjectID(req.body._id)}}
+        ).toArray()
+      thread = threads.find(
+        {_id: {$eq: ObjectID(req.body._id)}}
+        ).toArray()
+      res.json('Got match')
     })
 
     /*db.collection('threads').aggregate([
