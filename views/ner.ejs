@@ -46,7 +46,7 @@ td:not(.hidden):hover {
                 <tr>
                     <td class = "hidden"><%= NER[i].Title%></td>
                     <td onclick="showHideRow('<%= NER[i]._id%>')"><%= NER[i].Body.substring(0,100)%> ...</td>
-                    <td class = "match-cell" id = "<%= NER[i]._id%>"><%= NER[i].Stocks%></td>
+                    <td class = "match-cell" data-id = "<%= NER[i]._id%>"><%= NER[i].Stocks%></td>
                 </tr>
                 <tr id = "<%= NER[i]._id%>" style = "display:none;">
                     <td class = "hidden" colspan = 3><%= NER[i].Body%></td>
