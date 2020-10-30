@@ -101,7 +101,7 @@ postDf['Stocks'] = 0
 postDf['Stocks'] = postDf['Stocks'].astype(object)
 
 def cleanStrings(string):
-    return re.sub("[^a-zA-Z0-9./$:,']+", ' ',string)
+    return re.sub("[^a-zA-Z0-9./$:,'&]+", ' ',string) #only include normal string characters
 
 postDf['Title'] = postDf['Title'].apply(cleanStrings)
 postDf['Body'] = postDf['Body'].apply(cleanStrings)
@@ -130,5 +130,7 @@ for i in range(len(postDf['Body'])):
         stocklist = list(set(namedf.loc[namedf['Similarity'] > 0.8, 'Right'].append(symboldf.loc[symboldf['Similarity'] > 0.999, 'Right'])))
     postDf.at[threadID, 'Stocks'] = stocklist
 postDf = postDf.drop(postDf.loc[postDf['Stocks'].str.len() == 0].index).reset_index()
+
+postDf = postDf.drop(columns = ['index'])
 
 threads.insert_many(postDf.to_dict('records'))
