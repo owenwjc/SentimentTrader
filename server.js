@@ -10,6 +10,7 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
     console.log('In the mainframe')
     const db = client.db('db')
     const threads = db.collection('threads')
+    const comments = db.collection('comments')
     const chunks = db.collection('chunks')
     const matches = db.collection('matches')
     var postid = null
@@ -31,7 +32,7 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
     })
 
     app.get('/labelling', (req,res) => {
-      threads.findOne(
+      comments.findOne(
           {Label: 0}
       ).then(results => {
         if (results){
@@ -95,7 +96,7 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
       ])*/
 
     app.put('/names', (req,res)=>{
-      threads.findOneAndUpdate(
+      comments.findOneAndUpdate(
         {_id: postid},
         {$set: {
           Label: req.body.button
@@ -108,7 +109,7 @@ MongoClient.connect('mongodb://localhost:27017/?readPreference=primary&appname=M
     })
 
     app.delete('/names', (req,res) => {
-        threads.deleteOne({
+        comments.deleteOne({
           _id: ObjectID(postid)}
       ).then(result => {
         res.json('Deleted entry')

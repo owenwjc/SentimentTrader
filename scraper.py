@@ -56,7 +56,7 @@ notTickers = {'DCF', 'IMO', 'CAN', 'MMS', 'ARE', 'CDC', 'NEW', 'LOVE', 'NYC', 'C
 'RARE', 'ALEX', 'KEY', 'STIM', 'GO', 'SEE', 'CFO', 'CAL', 'REV', 'PE', 'CHI', 'EVE', 'PDT',
 'CO', 'EV', 'TTM', 'EOD', 'AT', 'HUGE', 'ES', 'ONE', 'PT', 'CEO', 'ZEN', 'NOW', 'JAN', 'O',
 'OR', 'PG', 'ROCK', 'FOUR', 'ONE', 'TWO', 'FIVE', 'SIX', 'NINE', 'TEN', 'ON', 'SU', 'XT',
-'WELL', 'NOV', 'MAR', 'JAN', 'FUN', 'NOW', 'VERY'}
+'WELL', 'NOV', 'MAR', 'JAN', 'FUN', 'NOW', 'VERY', 'USA', 'POST'}
 
 wantedTags = ['DD', 'Technicals', 'Fundamentals', 'Discussion', 'YOLO', 'Stocks']
 
